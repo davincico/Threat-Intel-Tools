@@ -1,6 +1,7 @@
 import requests
 import time
- 
+from tqdm import tqdm
+
 # API key needed
 # Query own API key current limit using this: 
 # https://urlscan.io/docs/api/
@@ -55,16 +56,33 @@ def get_urlscan_result(scan_uuid, api_key, retries=4, delay=15):
 
     return None
 
+# // COLORS
+RED = "\033[91m"
+YELLOW = "\033[93m"
+LIGHT_GREEN = "\033[92;1m"
+LIGHT_BLUE = "\033[96m"
+RESET = "\033[0m"
+
+# // Loading bar
+def loading_bar(interval):
+    """
+    Simple tqdm display-only loading bar with specified jump intervals
+    """
+    for i in tqdm(range(10)):
+        time.sleep(interval) #how fast to load the bar, jumps in x seconds
 
 def urlscan_submit_retrieve(url, api_key):
     scan_uuid = submit_to_urlscan(url, api_key)
     if scan_uuid:
         print("Scan submitted successfully.")
-        print("Waiting for scan results...")
+        print("Waiting for scan results from urlscan, please allow 10-25s...")
+        loading_bar(1) # 10s minimum for urlscan
         scan_data = get_urlscan_result(scan_uuid, api_key)
         if scan_data:
-            print(scan_data)
-            print(f"[*] You can obtain the target URL screenshot here:\nhttps://urlscan.io/screenshots/{scan_uuid}.png")
+            result_url = f'https://urlscan.io/api/v1/result/{scan_uuid}/'
+            
+            print(f"Scanned URL: {url}\n{LIGHT_GREEN}[*] Urlscan Results: {result_url}")
+            print(f"[*] You can obtain the target URL screenshot here:\nhttps://urlscan.io/screenshots/{scan_uuid}.png{RESET}")
             print(f"[*] You can obtain the target DOM snapshot here:\n https://urlscan.io/dom/{scan_uuid}/")
             # return scan_data
         else:

@@ -6,6 +6,15 @@ import json
 from urlscan import *
 from spur_ip import *
 from abuseipdb import check_abuseipdb
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+urlscan_api_key = os.getenv('urlscan_api_key', 'YourAPIKeyifnotSet') # 150k public scans per day
+VT_API_KEY = os.getenv('VT_API_KEY', 'YourAPIKeyifnotSet')
+# Replace with your VirusTotal API key
+# 4 lookups per min, 500 per day (15.5k per month)
 
 """
 Current integrations include:
@@ -19,10 +28,7 @@ Current integrations include:
 # SAMPLE IP for testing: 142.251.40.174 google.com
 # pip install python-whois, prettytable
 # Guide: https://pypi.org/project/prettytable/
-
-urlscan_api_key = 'InsertYourAPIKey' # 150k public scans per day
-VT_API_KEY = 'InsertYourAPIKey'  # Replace with your VirusTotal API key
-# 4 lookups per min, 500 per day (15.5k per month)
+  
 
 # // COLORS
 RED = "\033[91m"
@@ -195,7 +201,7 @@ def main():
             print('[!] Error submitting scan request:', scan_result['verbose_msg'])
 
 
-        print(f'{LIGHT_GREEN}[*] Submitting the indicator on Urlscan: {resource}{RESET}')
+        print(f'\n{LIGHT_GREEN}[*] Submitting the indicator on Urlscan: {resource}{RESET}')
         print(f'\n{YELLOW}=============================== Urlscan ==============================={RESET}')
         urlscan_submit_retrieve(resource, urlscan_api_key)
         

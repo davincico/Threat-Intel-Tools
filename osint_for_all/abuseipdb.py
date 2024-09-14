@@ -2,9 +2,13 @@ import requests
 from rich.console import Console
 from rich.table import Table
 from rich import print
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+ABUSEIPDB_API_KEY = os.getenv('ABUSEIPDB_API_KEY', 'YourAPIKeyifnotSet')
 #abuseipdb API Key - 1000/day checks
-ABUSEIPDB_API_KEY = 'YourAPIKeyHere'
+
 
 def check_abuseipdb(ip, details): # details is boolean flag
     # How far back to fetch the report (default is 90 days)

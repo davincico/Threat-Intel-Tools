@@ -18,3 +18,10 @@ Tired of running the same URL/IP or domain indicator across different analysis p
 A simple single command to run the tool `python3 osint_for_all.py <target>`
 
 ## Demonstration
+Submitting a sample domain for analysis: `hackernoon.com`
+![alt text](/img/image.png)
+
+Submitting a sample IP address for analysis: `142.251.40.174`  google.com
+
+![alt text](/img/image-01.png)
+![alt text](/img/image-1.png)

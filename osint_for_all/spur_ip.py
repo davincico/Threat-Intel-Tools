@@ -2,6 +2,8 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable 
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # pip install prettytable
 # Guide: https://pypi.org/project/prettytable/
 
