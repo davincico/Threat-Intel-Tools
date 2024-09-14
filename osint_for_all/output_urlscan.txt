@@ -1,7 +1,7 @@
-[92;1m[*] Submitting the indicator on VirusTotal: hackernoon.com[0m
+[*] Submitting the indicator on VirusTotal: hackernoon.com
 [*] Scan request successfully submitted.
 
-[93m=============================== VirusTotal ===============================[0m
+=============================== VirusTotal ===============================
 permalink: https://www.virustotal.com/gui/url/97b5fed6aff9e9e28e8502e288fbc32844ae333c7c692be3a310684bacc42ab8/detection/u-97b5fed6aff9e9e28e8502e288fbc32844ae333c7c692be3a310684bacc42ab8-1726206171
 Number of hits on VT: 0/96
 resource: hackernoon.com
