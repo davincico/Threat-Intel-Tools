@@ -1,10 +1,14 @@
 import requests
 import time
-import json
  
 # API key needed
 # Query own API key current limit using this: 
 # https://urlscan.io/docs/api/
+
+"""
+Ref:
+https://github.com/ThatSINEWAVE/URL-Analysis-Tool/blob/main/urlscan_module.py
+"""
 
 def submit_to_urlscan(url, api_key):
     headers = {'API-Key': api_key, 'Content-Type': 'application/json'}

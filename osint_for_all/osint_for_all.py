@@ -1,11 +1,11 @@
 import requests
 import argparse
-import sys
-from tabulate import tabulate
+# from tabulate import tabulate
 import ipaddress
 import json
-import whois
 from urlscan import *
+from spur_ip import *
+from abuseipdb import check_abuseipdb
 
 """
 Current integrations include:
@@ -13,12 +13,15 @@ Current integrations include:
 2. Urlscan.io
 3. siterview (to overcome script/scrapper blockers) 
 3. whois (to fix, servers perpetually time out)
+4. IPinfo
+5. Spur.us
 """
-
-#  pip install python-whois
+# SAMPLE IP for testing: 142.251.40.174 google.com
+# pip install python-whois, prettytable
+# Guide: https://pypi.org/project/prettytable/
 
 urlscan_api_key = 'InsertYourAPIKey' # 150k public scans per day
-API_KEY = 'InsertYourAPIKey'  # Replace with your VirusTotal API key
+VT_API_KEY = 'InsertYourAPIKey'  # Replace with your VirusTotal API key
 # 4 lookups per min, 500 per day (15.5k per month)
 
 # // COLORS
@@ -28,16 +31,16 @@ LIGHT_GREEN = "\033[92;1m"
 LIGHT_BLUE = "\033[96m"
 RESET = "\033[0m"
 
-# // VirusTotal Module 
+# // VirusTotal Module V2
 def get_report(resource):
     url = 'https://www.virustotal.com/vtapi/v2/url/report'
-    params = {'apikey': API_KEY, 'resource': resource}
+    params = {'apikey': VT_API_KEY, 'resource': resource}
     response = requests.get(url, params=params)
     return response.json()
 
 def scan_url(resource):
     url = 'https://www.virustotal.com/vtapi/v2/url/scan'
-    params = {'apikey': API_KEY, 'url': resource}
+    params = {'apikey': VT_API_KEY, 'url': resource}
     response = requests.post(url, data=params)
     return response.json()
 
@@ -46,7 +49,7 @@ def scan_ip(resource):
 
     headers = {
         'Accept': 'application/json',
-        'x-apikey': API_KEY
+        'x-apikey': VT_API_KEY
     }
 
     response = requests.request(method='GET', url=url, headers=headers)
@@ -78,15 +81,15 @@ def filter_data(data):
 
     return output
 
-# function to list keys by indent
-def format_report(report):
-    if 'scans' in report:
-        table_data = []
-        for scanner, result in report['scans'].items():
-            table_data.append([scanner, result['detected'], result['result']])
-        return tabulate(table_data, headers=['Scanner', 'Detected', 'Result'], tablefmt='grid')
-    else:
-        return '[!] No scan data available.'
+# Optional function to table out Scanner:Detected:Result 
+# def format_report(report):
+#     if 'scans' in report:
+#         table_data = []
+#         for scanner, result in report['scans'].items():
+#             table_data.append([scanner, result['detected'], result['result']])
+#         return tabulate(table_data, headers=['Scanner', 'Detected', 'Result'], tablefmt='grid')
+#     else:
+#         return '[!] No scan data available.'
 
 # select certain keys in the json output to output
 def print_selected_keys(json_obj, keys):
@@ -125,17 +128,24 @@ def is_ip_address(input_str):
     except ValueError:
         return False
     
-# // Whois Module
-def whois_scan(domain):
-    try:
-        whois_response = whois.whois(domain)
-        return whois_response
-    except Exception as exception:
-        return f"[!] Error occured while fetching Whois response: {exception}"
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Scan an IP address, URL, or domain using VirusTotal API.')
+    """
+    Takes 1 input: IP address, URL or Domain for enrichment and analysis
+    Full suite of Tools
+    1. IP address enrichment
+        - VirusTotal
+        - AbuseIPDB
+        - IPinfo
+        - Spur.us (pending)
+    2. URLs & Domains
+        - VirusTotal
+        - Urlscan.io
+        - SiteReview (pending)
+        
+    """
+    parser = argparse.ArgumentParser(description='Scan an IP address, URL, or domain using OSINT Suite.')
     parser.add_argument('resource', help='The IP address, URL, or domain to scan.')
     args = parser.parse_args()
 
@@ -143,7 +153,7 @@ def main():
 
     if is_ip_address(resource):
         """
-        Perform IP Address OSINT Exposure checks: VT, abuseipdb, DNS resolution
+        Perform IP Address OSINT Exposure checks using: VT, AbuseIPDB, IPinfo, Spur.us
         """
         print(f'{LIGHT_GREEN}[*] Submitting the IP address indicator on VirusTotal: {resource}{RESET}')
     
@@ -154,11 +164,17 @@ def main():
         report = filter_data(scan_result)
         print(f'\n{YELLOW}=============================== VirusTotal ==============================={RESET}')                
         print(report)
+        print(f'{LIGHT_GREEN}[*] Submitting the indicator on AbuseIPDB: {resource}{RESET}')
+        print(f'\n{YELLOW}=============================== AbuseIPDB ==============================={RESET}')
+        check_abuseipdb(resource, True) #Default set to full details
+        print(f'{LIGHT_GREEN}[*] Submitting the indicator on Spur & Ipinfo: {resource}{RESET}')
+        print(f'\n{YELLOW}=============================== IP Enrichment on Spur & Ipinfo ==============================={RESET}')        
+        process_ip(resource)
         
 
     else: # Non-IP address: URL, domain, File Hash
         """
-        Perform VT, Sitereview, URLscan, Whois
+        Perform URL/Domain exposure checks using: VT, Sitereview, URLscan
         """
         print(f'{LIGHT_GREEN}[*] Submitting the indicator on VirusTotal: {resource}{RESET}')
     
@@ -179,8 +195,8 @@ def main():
             print('[!] Error submitting scan request:', scan_result['verbose_msg'])
 
 
-        print(f'[*] Submitting the indicator on Urlscan: {resource}')
-        print('\n=============================== Urlscan ===============================')
+        print(f'{LIGHT_GREEN}[*] Submitting the indicator on Urlscan: {resource}{RESET}')
+        print(f'\n{YELLOW}=============================== Urlscan ==============================={RESET}')
         urlscan_submit_retrieve(resource, urlscan_api_key)
         
 
