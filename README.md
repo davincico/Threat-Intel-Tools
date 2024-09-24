@@ -34,13 +34,13 @@ Submitting a sample domain for analysis: `hackernoon.com`
 Submitting a sample IP address for analysis: `142.251.40.174`  google.com
 
 VirusTotal and URLSCAN enrichment:
-![alt text](/img/image-1.png)
+![alt text](/img/image-01.png)
 
 Abuseipdb section:
-![alt text](/img/image-2.png)
+![alt text](/img/image_abuseipdb.png)
 
 Spur & Ipinfo section:
-![alt text](/img/image-3.png)
+![alt text](/img/image_spur.png)
 
 ## Notes
 #### VT API Limits
