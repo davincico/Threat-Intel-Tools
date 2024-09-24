@@ -79,7 +79,7 @@ def urlscan_submit_retrieve(url, api_key):
         loading_bar(1) # 10s minimum for urlscan
         scan_data = get_urlscan_result(scan_uuid, api_key)
         if scan_data:
-            result_url = f'https://urlscan.io/api/v1/result/{scan_uuid}/'
+            result_url = f'https://urlscan.io/result/{scan_uuid}/'
             
             print(f"Scanned URL: {url}\n{LIGHT_GREEN}[*] Urlscan Results: {result_url}")
             print(f"[*] You can obtain the target URL screenshot here:\nhttps://urlscan.io/screenshots/{scan_uuid}.png{RESET}")
