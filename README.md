@@ -1,5 +1,5 @@
-# Threat Intelligence Tools Collection
-## apollo.py 
+* All-in-One OSINT IP & URL & Domain Indicator Enrichment Toolsuite
+## Apollo.py 
 **An all in one tool for IP/URL/Domain analysis and enrichment.**
 
 Tired of running the same URL/IP or domain indicator across different analysis platforms and tools manually? This tool allows you to run the same target across a multitude of analysis and reputation check platforms, allowing a seamless experience and a combined output with just one click.
