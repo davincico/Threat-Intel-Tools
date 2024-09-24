@@ -29,18 +29,18 @@ You are all set!
 
 ## Demonstration
 Submitting a sample domain for analysis: `hackernoon.com`
-![alt text](image.png)
+![alt text](/img/image.png)
 
 Submitting a sample IP address for analysis: `142.251.40.174`  google.com
 
 VirusTotal and URLSCAN enrichment:
-![alt text](image-1.png)
+![alt text](/img/image-1.png)
 
 Abuseipdb section:
-![alt text](image-2.png)
+![alt text](/img/image-2.png)
 
 Spur & Ipinfo section:
-![alt text](image-3.png)
+![alt text](/img/image-3.png)
 
 ## Notes
 #### VT API Limits
