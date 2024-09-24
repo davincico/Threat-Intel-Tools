@@ -8,6 +8,9 @@ from spur_ip import *
 from abuseipdb import check_abuseipdb
 import os
 from dotenv import load_dotenv
+from rich.console import Console
+from rich.table import Table
+from rich import print as rprint
 
 load_dotenv()
 
@@ -80,10 +83,33 @@ def filter_data(data):
         malicious_report = f" - Malicious: {data['data']['attributes']['last_analysis_stats']['malicious']}"
         suspicious_report = f" - Suspicious: {data['data']['attributes']['last_analysis_stats']['suspicious']}"
         country = f"Country: {data['data']['attributes']['country']}"
-        AS_no = f"AS Number: {data['data']['attributes']['whois']}"
+        AS_no = f"AS Number: {data['data']['attributes']['whois']}" # the large chunk
 
-        link = f"{LIGHT_GREEN}[*] VirusTotal results link:{RESET}\n{data['data']['links']['self']}"
-        output = f"\n[*] VirusTotal\n{LIGHT_GREEN}Security Vendors' Analysis{RESET}\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}\n\n{LIGHT_GREEN}[*] Geolocation & Other information{RESET}\n{country}\n{AS_no}\n{link}"
+        def remove_comment(text):
+            lines = text.splitlines()
+            result = []
+            for line in lines:
+                if "Comment: " in line:
+                    break
+                result.append(line)
+
+            
+            return '\n'.join(result)
+        
+        cleaned = remove_comment(AS_no) # cleaned VT output chunk
+
+        link = f"{data['data']['links']['self']}"
+        #output = f"\n[*] VirusTotal\n{LIGHT_GREEN}Security Vendors' Analysis{RESET}\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}\n\n{LIGHT_GREEN}[*] Geolocation & Other information{RESET}\n{country}\n{cleaned}\n{link}"
+
+        console = Console()
+        table = Table(title="[bold green]VirusTotal Report Summary[/bold green]")
+        table.add_column("Key", style="cyan")
+        table.add_column("Value")
+        table.add_row("Security Vendors' Analysis", f"Summary:\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}" )
+        table.add_row("\nGeolocation & Other Information", f"\n{country}\n{cleaned}" )
+        table.add_row("\nVirusTotal Results Link", f"\n{link}")
+        #table.caption = f"IP address [bold green]{resource}[/bold green] has not been reported as malicious!\n"
+        output = console.print(table)
 
     return output
 
@@ -161,19 +187,19 @@ def main():
         """
         Perform IP Address OSINT Exposure checks using: VT, AbuseIPDB, IPinfo, Spur.us
         """
-        print(f'{LIGHT_GREEN}[*] Submitting the IP address indicator on VirusTotal: {resource}{RESET}')
+        print(f'\n\n{LIGHT_GREEN}[*] Submitting the IP address indicator on VirusTotal: {resource} {RESET}')
     
         scan_result = scan_ip(resource)
         #print(scan_result) # submission URL
         
-        print('[*] Scan request successfully submitted.')
-        report = filter_data(scan_result)
-        print(f'\n{YELLOW}=============================== VirusTotal ==============================={RESET}')                
-        print(report)
-        print(f'{LIGHT_GREEN}[*] Submitting the indicator on AbuseIPDB: {resource}{RESET}')
+        print('[*] Scan request successfully submitted.\n')
+        
+        report = filter_data(scan_result) # function by itself will print, so no need to call again
+
+        print(f'\n\n{LIGHT_GREEN}[*] Submitting the indicator on AbuseIPDB: {resource}{RESET}')
         print(f'\n{YELLOW}=============================== AbuseIPDB ==============================={RESET}')
         check_abuseipdb(resource, True) #Default set to full details
-        print(f'{LIGHT_GREEN}[*] Submitting the indicator on Spur & Ipinfo: {resource}{RESET}')
+        print(f'\n\n{LIGHT_GREEN}[*] Submitting the indicator on Spur & Ipinfo: {resource}{RESET}')
         print(f'\n{YELLOW}=============================== IP Enrichment on Spur & Ipinfo ==============================={RESET}')        
         process_ip(resource)
         
