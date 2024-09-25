@@ -1,17 +1,10 @@
 import requests
 import json
 from bs4 import BeautifulSoup
-# from prettytable import PrettyTable 
 from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
 
-# import urllib3
-# urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-# pip install prettytable
-# Guide: https://pypi.org/project/prettytable/
-
-# REFERENCE: https://github.com/stanfrbd/check_ip/tree/main
 
 """
 Spur.us & ipinfo for IP enrichment
