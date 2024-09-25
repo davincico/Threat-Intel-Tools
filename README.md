@@ -25,6 +25,8 @@ Install the relevant dependencies:
 
 Fill in the sample_env.txt with your API Keys and rename file to `.env`.
 
+Use `Python 3`
+
 You are all set!
 
 ## Demonstration
