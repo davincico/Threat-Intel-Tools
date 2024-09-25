@@ -24,7 +24,8 @@ Tool will automatically parse the input and determine the type of indicator it i
 1. Install the relevant dependencies:
 `pip install python-dotenv rich prettytable beautifulsoup4 tqdm`
 
-2. Fill in the sample_env.txt with your API Keys and rename file to `.env`.
+2. Fill in the sample_env.txt with your API Keys and rename file to `.env`. Make sure it remains in the same folder as Apollo.py.
+
 You will need VirusTotal, Urlscan and Abuseipdb API keys. The free tiers alone should have relatively high quotas for personal usage.
 
 You are all set!
