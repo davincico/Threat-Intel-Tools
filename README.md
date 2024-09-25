@@ -15,17 +15,17 @@ At the current stage, tool only uses API keys for VT, AbuseIPDB and Urlscan.
 
 ## Usage
 **Target:** Single IP address, URL or domain to investigate
+Use Python3!
 
 A simple single command to run the tool `python3 apollo.py <target>`
 Tool will automatically parse the input and determine the type of indicator it is, executing the appropriate modules relavant to the indicator type.
 
 ## Setting up
-Install the relevant dependencies:
+1. Install the relevant dependencies:
 `pip install python-dotenv rich prettytable beautifulsoup4 tqdm`
 
-Fill in the sample_env.txt with your API Keys and rename file to `.env`.
-
-Use `Python 3`
+2. Fill in the sample_env.txt with your API Keys and rename file to `.env`.
+You will need VirusTotal, Urlscan and Abuseipdb API keys. The free tiers alone should have relatively high quotas for personal usage.
 
 You are all set!
 
