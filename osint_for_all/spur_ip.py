@@ -40,8 +40,6 @@ def get_spur(ip):
     y = (''.join(list))
     #print(y)
     """
-    Guide to filtering out wanted data from scraped raw contents:
-    https://www.digitalocean.com/community/tutorials/how-to-scrape-web-pages-with-beautiful-soup-and-python-3
               <i class="fas fa-ethernet fa-1x mr-3"></i>
 
           142.251.40.174

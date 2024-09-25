@@ -2,15 +2,6 @@ import requests
 import time
 from tqdm import tqdm
 
-# API key needed
-# Query own API key current limit using this: 
-# https://urlscan.io/docs/api/
-
-"""
-Ref:
-https://github.com/ThatSINEWAVE/URL-Analysis-Tool/blob/main/urlscan_module.py
-"""
-
 def submit_to_urlscan(url, api_key):
     headers = {'API-Key': api_key, 'Content-Type': 'application/json'}
     data = {"url": url, "visibility": "public"}

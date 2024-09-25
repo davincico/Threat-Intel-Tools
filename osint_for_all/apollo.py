@@ -166,7 +166,7 @@ def main():
         - VirusTotal
         - AbuseIPDB
         - IPinfo
-        - Spur.us (pending)
+        - Spur.us 
     2. URLs & Domains
         - VirusTotal
         - Urlscan.io

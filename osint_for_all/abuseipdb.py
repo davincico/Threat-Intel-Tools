@@ -98,16 +98,3 @@ def check_abuseipdb(ip, details): # details is boolean flag
 # FUNCTION CALL
 # check_abuseipdb('142.251.40.174', True)
 
-"""
-Details = True
-                                  List of Checked IP
-┏━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ IP Address     ┃ Score ┃ Domain     ┃ Reports ┃ Country ┃ Lastest Report            ┃
-┡━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ 142.251.40.174 │   0   │ google.com │    0    │   US    │ 2023-10-25T17:02:04+00:00 │
-└────────────────┴───────┴────────────┴─────────┴─────────┴───────────────────────────┘
-             IP address 142.251.40.174 has not been reported as malicious!
-
-Details = False
-IP address 142.251.40.174 assigned to domain google.com has not been reported as malicious with a confidence score of [0].
-"""
