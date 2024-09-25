@@ -43,10 +43,10 @@ Spur & Ipinfo section:
 ![alt text](/img/image_spur.png)
 
 ## Notes
-#### VT API Limits
+### VT API Limits
 For the VT API Key, premium (org private user) API quota allowances are at 1000 lookups/day, 31k lookups/month.
 
-#### Urlscan
+### Urlscan
 Urlscan API (org team) quotas: 100k private scans/day across the team account.
 
 For URLSCAN, to check remaining quotas:
@@ -59,3 +59,21 @@ URLSCAN is selected as one of our tools for url scanning as it automatically col
 3. CertStream Suspicious domains observed on CertStream
 4. Twitter URLs being tweeted / pasted by various Twitter users.
 5. URLhaus Malware URL exchange by Abuse.ch: URLhaus
+
+
+## Developments 1.0 - Table format
+I was given the request to table every result from the IP enrichment, due to the volume of output. Definitely more readable in a table.
+
+**Here are the results:**
+1. VT segment
+
+![alt text](/img/table_vt.png)
+
+2. Abuseipdb
+ 
+![alt text](/img/table_abuse.png)
+
+3. Spur & Ipinfo
+
+![alt text](/img/table_ip.png)
+

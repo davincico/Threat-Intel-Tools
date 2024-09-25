@@ -1,7 +1,11 @@
 import requests
 import json
 from bs4 import BeautifulSoup
-from prettytable import PrettyTable 
+# from prettytable import PrettyTable 
+from rich.console import Console
+from rich.table import Table
+from rich import print as rprint
+
 # import urllib3
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # pip install prettytable
@@ -13,6 +17,12 @@ from prettytable import PrettyTable
 Spur.us & ipinfo for IP enrichment
 Spur.us requires API key for better access
 """
+# // COLORS
+RED = "\033[91m"
+YELLOW = "\033[93m"
+LIGHT_GREEN = "\033[92;1m"
+LIGHT_BLUE = "\033[96m"
+RESET = "\033[0m"
 
 def get_ipinfo(ip):
     ipinfo_url = f"https://ipinfo.io/{ip}"
@@ -33,8 +43,9 @@ def get_spur(ip):
     list = []
     for i in type_use:
         list.append(i.text)
-    x = (''.join(list))
-    #print(x)
+
+    y = (''.join(list))
+    #print(y)
     """
     Guide to filtering out wanted data from scraped raw contents:
     https://www.digitalocean.com/community/tutorials/how-to-scrape-web-pages-with-beautiful-soup-and-python-3
@@ -83,14 +94,17 @@ def get_spur(ip):
             content = title_text.split("(")[1].split(")")[0].strip()
         else:
             content = "Not Anonymous"
-    print("[+] Returning data from Spur.us:")
-    print(x)
-    return content
+    print(f"{YELLOW}[+] Returning data from IPinfo and Spur:\n{RESET}")
+    #print(y)
+    return y, content
 
 def process_ip(ip):
     ipinfo_data = get_ipinfo(ip)
     ipinfo_json = json.loads(ipinfo_data.text)
 
+    y, content = get_spur(ip) # assign the 2 variables to function, subsequently call individually
+
+    # main bulk of the compact IP data
     data = {
         "IP": ip,
         "City": ipinfo_json['city'],
@@ -100,21 +114,22 @@ def process_ip(ip):
         "ISP": ipinfo_json['org'],
         "Postal": ipinfo_json['postal'] if 'postal' in ipinfo_json else "Unknown",
         "Timezone": ipinfo_json['timezone'],
-        "VPN Vendor (Spur)": get_spur(ip)
+        "VPN Vendor (Spur)": content
     }
 
-    table = PrettyTable()
-    table.field_names = ["Key", "Value"]
+    console = Console()
+    table = Table(title="[bold green]IPinfo & Spur Report Summary[/bold green]")
+    table.add_column("Key", style="cyan")
+    table.add_column("Value")
 
     for key, value in data.items():
-        table.add_row([key, value])
+        table.add_row(key, value)
+    table.add_row("Spur IP report:" , y)
+    output = console.print(table)
 
-    print(table)
-    print("\n")
+    return output
 
-    return data
-
-# Function requires jwt_token
+### OPTIONAL: Requires API or JWT Token - Premium subscriber
 def process_ip_with_spur(ip):
     
     ip_address = ip
@@ -165,6 +180,9 @@ def process_ip_with_spur(ip):
             "tunnels": ", ".join([tunnel.get("operator", "") for tunnel in v2.get("tunnels", [])])
         }
     else:
-        print(f"Failed to process IP {ip_address}. Status code: {response.status_code}")
+        print(f"[!] Failed to process IP {ip_address}. Status code: {response.status_code}")
         return None
 
+if __name__ == '__main__':
+    x = input("Enter your target: ")
+    process_ip(x)
