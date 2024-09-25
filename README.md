@@ -5,7 +5,7 @@
 Tired of running the same URL/IP or domain indicator across different analysis platforms and tools manually? This tool allows you to run the same target across a multitude of analysis and reputation check platforms, allowing a seamless experience and a combined output with just one click.
 
 **Tools in the suite:**
-At the current stage, tool only uses API keys for VT and Urlscan.
+At the current stage, tool only uses API keys for VT, AbuseIPDB and Urlscan.
 1. VirusTotal - Scans IP address/URL/Domain for reputation checks
 2. AbuseIPDB - IP enrichment
 3. Urlscan.io - generates the URL site screenshots and dom snapshot links 
@@ -62,7 +62,7 @@ URLSCAN is selected as one of our tools for url scanning as it automatically col
 
 
 ## Developments 1.0 - Table format
-I was given the request to table every result from the IP enrichment, due to the volume of output. Definitely more readable in a table.
+I was given the request to table every result from the IP enrichment due to the volume of output. Definitely more readable in a table.
 
 **Here are the results:**
 1. VT segment
