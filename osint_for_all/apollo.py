@@ -1,6 +1,5 @@
 import requests
 import argparse
-# from tabulate import tabulate
 import ipaddress
 import json
 from urlscan import *
@@ -28,9 +27,6 @@ Current integrations include:
 4. IPinfo
 5. Spur.us
 """
-# SAMPLE IP for testing: 142.251.40.174 google.com
-# pip install python-whois, prettytable
-# Guide: https://pypi.org/project/prettytable/
   
 
 # // COLORS
