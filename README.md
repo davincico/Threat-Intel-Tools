@@ -1,4 +1,4 @@
-# All-in-One OSINT IP & URL & Domain Indicator Enrichment Toolsuite
+# All-in-One OSINT IP & URL & Domain Indicator Enrichment Tool
 ## Apollo.py 
 **An all in one tool for IP/URL/Domain analysis and enrichment.**
 
