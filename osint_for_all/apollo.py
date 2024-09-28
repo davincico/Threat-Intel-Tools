@@ -42,6 +42,7 @@ def get_report(resource):
     params = {'apikey': VT_API_KEY, 'resource': resource}
     response = requests.get(url, params=params)
     return response.json()
+    # results link is actually in the format https://www.virustotal.com/gui/ip-address/{ip}
 
 def scan_url(resource):
     url = 'https://www.virustotal.com/vtapi/v2/url/scan'
@@ -94,16 +95,17 @@ def filter_data(data):
         
         cleaned = remove_comment(AS_no) # cleaned VT output chunk
 
-        link = f"{data['data']['links']['self']}"
+        api_submit_link = f"{data['data']['links']['self']}"
         #output = f"\n[*] VirusTotal\n{LIGHT_GREEN}Security Vendors' Analysis{RESET}\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}\n\n{LIGHT_GREEN}[*] Geolocation & Other information{RESET}\n{country}\n{cleaned}\n{link}"
+        ip = f"{data['data']['id']}"
 
         console = Console()
         table = Table(title="[bold green]VirusTotal Report Summary[/bold green]")
         table.add_column("Key", style="cyan")
         table.add_column("Value")
         table.add_row("Security Vendors' Analysis", f"Summary:\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}" )
-        table.add_row("\nGeolocation & Other Information", f"\n{country}\n{cleaned}" )
-        table.add_row("\nVirusTotal Results Link", f"\n{LIGHT_GREEN}{link}{RESET}")
+        table.add_row("\nGeolocation & WHOIS Information", f"\n{country}\n{cleaned}" )
+        table.add_row("\nVirusTotal Results Link", f"\n[bold green]https://www.virustotal.com/gui/ip-address/{ip}[/bold green]") # adding color will derail the table!
         #table.caption = f"IP address [bold green]{resource}[/bold green] has not been reported as malicious!\n"
         output = console.print(table)
 
