@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
-
 load_dotenv()
 
 urlscan_api_key = os.getenv('urlscan_api_key', 'YourAPIKeyifnotSet') # 150k public scans per day
@@ -108,6 +107,8 @@ def filter_data(data):
         table.add_row("\nVirusTotal Results Link", f"\n[bold green]https://www.virustotal.com/gui/ip-address/{ip}[/bold green]") # adding color will derail the table!
         #table.caption = f"IP address [bold green]{resource}[/bold green] has not been reported as malicious!\n"
         output = console.print(table)
+         
+           
 
     return output
 
