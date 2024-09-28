@@ -2,6 +2,9 @@
 ## Apollo.py 
 **An all in one tool for IP/URL/Domain analysis and enrichment.**
 
+**There are 2 options for this tool: plaintext CLI and Tabled CLI**
+There are stored in *osint_for_all* and *osint_for_all_TABLED* respectively.
+
 Tired of running the same URL/IP or domain indicator across different analysis platforms and tools manually? This tool allows you to run the same target across a multitude of analysis and reputation check platforms, allowing a seamless experience and a combined output with just one click.
 
 **Tools in the suite:**
@@ -30,20 +33,37 @@ You will need VirusTotal, Urlscan and Abuseipdb API keys. The free tiers alone s
 
 You are all set!
 
-## Demonstration
+## Demonstration 
+### 1. Plaintext Mode
 Submitting a sample domain for analysis: `hackernoon.com`
 ![alt text](/img/image.png)
 
 Submitting a sample IP address for analysis: `142.251.40.174`  google.com
 
-VirusTotal and URLSCAN enrichment:
-![alt text](/img/image-01.png)
-
-Abuseipdb section:
-![alt text](/img/image_abuseipdb.png)
+VirusTotal and Abuseipdb section:
+![alt text](/img/vt_ptmode.png)
 
 Spur & Ipinfo section:
-![alt text](/img/image_spur.png)
+![alt text](/img/spur_ptmode.png)
+
+### 2. Table Mode
+Code will be under **osint_for_all_TABLED folder**
+
+Improved readability in a table. However, may have issues copy n pasting to elsewhere.
+
+**Here are the results:**
+1. VT segment
+
+![alt text](/img/table_vt.png)
+
+2. Abuseipdb
+ 
+![alt text](/img/table_abuse.png)
+
+3. Spur & Ipinfo
+
+![alt text](/img/table_ip.png)
+
 
 ## Notes
 ### VT API Limits
@@ -63,20 +83,4 @@ URLSCAN is selected as one of our tools for url scanning as it automatically col
 4. Twitter URLs being tweeted / pasted by various Twitter users.
 5. URLhaus Malware URL exchange by Abuse.ch: URLhaus
 
-
-## Developments 1.0 - Table format
-I was given the request to table every result from the IP enrichment due to the volume of output. Definitely more readable in a table.
-
-**Here are the results:**
-1. VT segment
-
-![alt text](/img/table_vt.png)
-
-2. Abuseipdb
- 
-![alt text](/img/table_abuse.png)
-
-3. Spur & Ipinfo
-
-![alt text](/img/table_ip.png)
 

@@ -1,10 +1,10 @@
 import requests
 import json
 from bs4 import BeautifulSoup
-from rich.console import Console
-from rich.table import Table
-from rich import print as rprint
-
+# from rich.console import Console
+# from rich.table import Table
+# from rich import print as rprint
+from prettytable import PrettyTable
 
 """
 Spur.us & ipinfo for IP enrichment
@@ -108,17 +108,35 @@ def process_ip(ip):
         "VPN Vendor (Spur)": content
     }
 
-    console = Console()
-    table = Table(title="[bold green]IPinfo & Spur Report Summary[/bold green]")
-    table.add_column("Key", style="cyan")
-    table.add_column("Value")
-
     for key, value in data.items():
-        table.add_row(key, value)
-    table.add_row("Spur IP report:" , y)
-    output = console.print(table)
+        print(f"{key}:  {value}")
+    print(f"\n{LIGHT_BLUE}[*] Summary from Spur:{RESET} {y}\n\n")
+    print(y)
+    """
+    Table options - rich and PrettyTable()
+    """
+    # table = PrettyTable()
+    # table.field_names = ["Key", "Value"]
 
-    return output
+    # for key, value in data.items():
+    #     table.add_row([key, value])
+
+    # print(table)
+    # print("\n")
+
+    # return data
+
+    # console = Console()
+    # table = Table(title="[bold green]IPinfo & Spur Report Summary[/bold green]")
+    # table.add_column("Key", style="cyan")
+    # table.add_column("Value")
+
+    # for key, value in data.items():
+    #     table.add_row(key, value)
+    # table.add_row("Spur IP report:" , y)
+    # output = console.print(table)
+
+    # return output
 
 ### OPTIONAL: Requires API or JWT Token - Premium subscriber
 def process_ip_with_spur(ip):

@@ -1,7 +1,7 @@
 import requests
 from rich.console import Console
 from rich.table import Table
-from rich import print
+from rich import print as rprint
 from dotenv import load_dotenv
 import os
 
@@ -55,17 +55,17 @@ def check_abuseipdb(ip, details): # details is boolean flag
         # Python will recognise raw hostname as a list, make sure to strip square brackets
         r_Hostnames = str(data['data']['hostnames']).replace("[","").replace("'","").replace("]","")
         
-        console = Console()
-        table = Table(title="Table Summary from AbuseIPDB", caption=f"Default confidence score:  [yellow]{default_confidence_score}[yellow]")
-        table.add_column("IP Address", justify="left")
-        table.add_column("Score", justify="center")
-        table.add_column("Domain", justify="left")
-        table.add_column("ISP", justify="center")
-        table.add_column("Usage Type", justify="center")
-        table.add_column("Hostnames", justify="center")
-        table.add_column("Reports", justify="center")
-        table.add_column("Country", justify="center")
-        table.add_column("Last Scanned at", justify="left")
+        # console = Console()
+        # table = Table(title="Table Summary from AbuseIPDB", caption=f"Default confidence score:  [yellow]{default_confidence_score}[yellow]")
+        # table.add_column("IP Address", justify="left")
+        # table.add_column("Score", justify="center")
+        # table.add_column("Domain", justify="left")
+        # table.add_column("ISP", justify="center")
+        # table.add_column("Usage Type", justify="center")
+        # table.add_column("Hostnames", justify="center")
+        # table.add_column("Reports", justify="center")
+        # table.add_column("Country", justify="center")
+        # table.add_column("Last Scanned at", justify="left")
         
         settings_confidenceScore = 50 # Preset Threshold
         
@@ -73,14 +73,19 @@ def check_abuseipdb(ip, details): # details is boolean flag
         if details: # print details of IP check (Score, Domain, Reports, Country, Latest Report)
             if int(r_Score) >= settings_confidenceScore and int(r_Score) >= 1:
                 
-                table.add_row(ip, r_Score, r_Domain, r_Isp, r_UsageType, r_Hostnames, r_Reports_Count, r_Country_Code, r_Latest_Report)
-                console.print(table)
+                # table.add_row(ip, r_Score, r_Domain, r_Isp, r_UsageType, r_Hostnames, r_Reports_Count, r_Country_Code, r_Latest_Report)
+                # console.print(table)
+
+                print(f"IP Address: {ip}\nScore: {r_Score}\nDomain: {r_Domain}\nISP: {r_Isp}\nUsage Type: {r_UsageType}\nHostnames: {r_Hostnames}\nNo. of Times IP was Scanned: {r_Reports_Count}\nCountry: {r_Country_Code}\nLast Scanned at: {r_Latest_Report}")
+
                 print("")
             else:
                 
-                table.add_row(ip, r_Score, r_Domain, r_Isp, r_UsageType, r_Hostnames, r_Reports_Count, r_Country_Code, r_Latest_Report)
-                table.caption = f"IP address [bold green]{ip}[/bold green] has not been reported as malicious!\n"
-                console.print(table)
+                # table.add_row(ip, r_Score, r_Domain, r_Isp, r_UsageType, r_Hostnames, r_Reports_Count, r_Country_Code, r_Latest_Report)
+                # table.caption = f"IP address [bold green]{ip}[/bold green] has not been reported as malicious!\n"
+                # console.print(table)
+
+                print(f"IP Address: {ip}\nScore: {r_Score}\nDomain: {r_Domain}\nISP: {r_Isp}\nUsage Type: {r_UsageType}\nHostnames: {r_Hostnames}\nScanned Count: {r_Reports_Count}\nCountry: {r_Country_Code}\nLast Scanned at: {r_Latest_Report}")
                 print("")
         else:
             if int(r_Score) >= settings_confidenceScore:

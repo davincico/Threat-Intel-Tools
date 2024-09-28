@@ -7,9 +7,9 @@ from spur_ip import *
 from abuseipdb import check_abuseipdb
 import os
 from dotenv import load_dotenv
-# from rich.console import Console
-# from rich.table import Table
-# from rich import print as rprint
+from rich.console import Console
+from rich.table import Table
+from rich import print as rprint
 load_dotenv()
 
 urlscan_api_key = os.getenv('urlscan_api_key', 'YourAPIKeyifnotSet') # 150k public scans per day
@@ -94,11 +94,21 @@ def filter_data(data):
         
         cleaned = remove_comment(AS_no) # cleaned VT output chunk
 
-        #api_submit_link = f"{data['data']['links']['self']}"
+        api_submit_link = f"{data['data']['links']['self']}"
+        #output = f"\n[*] VirusTotal\n{LIGHT_GREEN}Security Vendors' Analysis{RESET}\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}\n\n{LIGHT_GREEN}[*] Geolocation & Other information{RESET}\n{country}\n{cleaned}\n{link}"
         ip = f"{data['data']['id']}"
-        link = f"https://www.virustotal.com/gui/ip-address/{ip}"
 
-        output = f"\n{LIGHT_GREEN}Security Vendors' Analysis{RESET}\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}\n\n{LIGHT_GREEN}[*] Geolocation & WHOIS information{RESET}\n{country}\n{cleaned}\n\n{LIGHT_BLUE}[*] VT Results Link: {link}"
+        console = Console()
+        table = Table(title="[bold green]VirusTotal Report Summary[/bold green]")
+        table.add_column("Key", style="cyan")
+        table.add_column("Value")
+        table.add_row("Security Vendors' Analysis", f"Summary:\n{harmless_report}\n{malicious_report}\n{suspicious_report}\n{network}" )
+        table.add_row("\nGeolocation & WHOIS Information", f"\n{country}\n{cleaned}" )
+        table.add_row("\nVirusTotal Results Link", f"\n[bold green]https://www.virustotal.com/gui/ip-address/{ip}[/bold green]") # adding color will derail the table!
+        #table.caption = f"IP address [bold green]{resource}[/bold green] has not been reported as malicious!\n"
+        output = console.print(table)
+         
+           
 
     return output
 
@@ -176,23 +186,21 @@ def main():
         """
         Perform IP Address OSINT Exposure checks using: VT, AbuseIPDB, IPinfo, Spur.us
         """
-        print(f'\n\n{LIGHT_GREEN}[*] Submitting the IP address indicator on VirusTotal: {resource} {RESET}')
+        print(f'\n\n{YELLOW}[*] Submitting the IP address indicator on VirusTotal: {resource} {RESET}')
     
         scan_result = scan_ip(resource)
         #print(scan_result) # submission URL
         
-        #print(f'{YELLOW}[*] Scan request successfully submitted.{RESET}')
-        print(f"{YELLOW}=============================== VirusTotal Report Summary ===============================")
+        print(f'{YELLOW}[*] Scan request successfully submitted.\n{RESET}')
         print(f"{YELLOW}[+] Returning data from VirusTotal:\n{RESET}")
         
-        report = filter_data(scan_result) 
-        print(report)
+        report = filter_data(scan_result) # function by itself will print, so no need to call again
 
-        print(f'\n\n{LIGHT_GREEN}[*] Submitting the indicator on AbuseIPDB: {resource}{RESET}')
-        print(f'\n{YELLOW}=============================== AbuseIPDB ==============================={RESET}')
+        print(f'\n\n{YELLOW}[*] Submitting the indicator on AbuseIPDB: {resource}{RESET}')
+        print(f'\n{YELLOW}=============================== AbuseIPDB ==============================={RESET}\n')
         print(f"{YELLOW}[+] Returning data AbuseIPDB:\n{RESET}")
         check_abuseipdb(resource, True) #Default set to full details
-        print(f'\n\n{LIGHT_GREEN}[*] Submitting the indicator on Spur & Ipinfo: {resource}{RESET}')
+        print(f'\n\n{YELLOW}[*] Submitting the indicator on Spur & Ipinfo: {resource}{RESET}')
         print(f'\n{YELLOW}=============================== IP Enrichment on Spur & Ipinfo ==============================={RESET}')        
         process_ip(resource)
         
