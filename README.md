@@ -1,9 +1,9 @@
 # All-in-One OSINT IP & URL & Domain Indicator Enrichment Tool
 ## Apollo.py 
 **An all in one tool for IP/URL/Domain analysis and enrichment.**
+![alt text](/img/badges.png)
 
-**There are 2 options for this tool: plaintext CLI and Tabled CLI**
-There are stored in *osint_for_all* and *osint_for_all_TABLED* respectively.
+**There are 2 options for this tool: plaintext output and Tabled output**. They are stored in *osint_for_all* and *osint_for_all_TABLED* respectively.
 
 Tired of running the same URL/IP or domain indicator across different analysis platforms and tools manually? This tool allows you to run the same target across a multitude of analysis and reputation check platforms, allowing a seamless experience and a combined output with just one click.
 
@@ -84,3 +84,6 @@ URLSCAN is selected as one of our tools for url scanning as it automatically col
 5. URLhaus Malware URL exchange by Abuse.ch: URLhaus
 
 
+# Author
+Developed by Davin Hong
+For any questions, please feel free to reach out.
