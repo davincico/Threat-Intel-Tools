@@ -4,7 +4,7 @@
 
 ![alt text](/img/badges.png)
 
-**There are 2 options for this tool: plaintext output and Tabled output**. They are stored in *osint_for_all* and *osint_for_all_TABLED* respectively.
+**There are 2 options for this tool: plaintext output and Tabled output**. They are stored in *osint_for_all* and *osint_for_all_TABLE* folders respectively.
 
 Tired of running the same URL/IP or domain indicator across different analysis platforms and tools manually? This tool allows you to run the same target across a multitude of analysis and reputation check platforms, allowing a seamless experience and a combined output with just one click.
 
