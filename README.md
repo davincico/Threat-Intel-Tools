@@ -1,6 +1,7 @@
 # All-in-One OSINT IP & URL & Domain Indicator Enrichment Tool
 ## Apollo.py 
 **An all in one tool for IP/URL/Domain analysis and enrichment.**
+
 ![alt text](/img/badges.png)
 
 **There are 2 options for this tool: plaintext output and Tabled output**. They are stored in *osint_for_all* and *osint_for_all_TABLED* respectively.
