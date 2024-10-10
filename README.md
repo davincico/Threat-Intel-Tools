@@ -86,5 +86,6 @@ URLSCAN is selected as one of our tools for url scanning as it automatically col
 
 
 # Author
-Developed by Davin Hong
-For any questions, please feel free to reach out @ https://www.linkedin.com/in/davinhong/
+Developed by Davin Hong.
+
+For any questions, please feel free to reach out at https://www.linkedin.com/in/davinhong/
